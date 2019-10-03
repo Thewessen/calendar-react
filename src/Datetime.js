@@ -1,6 +1,6 @@
 const ZEROYEAR = 2016
 
-const WEEKDAYS = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za']  
+const WEEKDAYS = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za']
 const MONTHS = [
   'Januari',
   'Februari',
@@ -86,12 +86,16 @@ class Datetime {
         (__, i) => m + i
       ).map(day => day > monthDays
         ? day - monthDays
-        : day < 0
+        : day <= 0
           ? Datetime.daysInMonth(this.month - 1) + day
           : day)
       month.push(week)
     }
     return month
+  }
+
+  dayNames() {
+    return WEEKDAYS
   }
 
   toString() {

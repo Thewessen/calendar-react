@@ -65,35 +65,70 @@ const InputField = ({ date, parse, showCalendar }) => (
       onChange={(e) => parse(e.target.value)} />
     <input
       type="button"
+      value="C"
       onClick={() => showCalendar()} />
   </div>
 )
 
-const Week = ({ week, handleClick }) => (
+const Week = ({ week, first, last, handleClick }) => (
   <div className="calendar-week">
-    {week.map(day =>
-      <div className="calendar-day"
-        key={day}
-        onClick={() => handleClick(day)}>{ day }</div>)}
+    {week.map(day => {
+      if ((first && last) || (first && day > 7) || (last && day < 7)) {
+        return (
+          <div className="disabled calendar-day" key={day}>
+            { day }
+          </div>
+        )
+      }
+      return (
+        <div
+          className="clickable calendar-day"
+          key={day}
+          onClick={() => handleClick(day)}>
+          { day }
+        </div>
+      )
+    })}
   </div>
 )
 
-const Month = ({ month, handleClick }) => month.map(week =>
-  <Week
-    week={week}
-    key={week.join('')}
-    handleClick={handleClick}/>)
+const Month = ({ month, dayNames, handleClick }) => (
+  <div className="calendar">
+    <Week
+      week={dayNames}
+      first={true}
+      last={true} />
+    <Week
+      week={month[0]}
+      first={true}
+      last={false}
+      handleClick={handleClick}/>
+    {month.slice(1, -1).map(week => (
+      <Week
+        week={week}
+        first={false}
+        last={false}
+        key={week.join('')}
+        handleClick={handleClick}/>
+    ))}
+    <Week
+      week={month[month.length-1]}
+      first={false}
+      last={true} />
+  </div>
+)
+
 
 const Selection = ({ field, inc, dec }) => (
   <div className="selection">
-    <span onClick={(e) => { e.preventDefault(); dec() }}>&lt;</span>
+    <span className="clickable" onClick={(e) => { e.preventDefault(); dec() }}>&lt;</span>
       { field }
-    <span onClick={(e) => { e.preventDefault(); inc() }}>&gt;</span>
+    <span className="clickable" onClick={(e) => { e.preventDefault(); inc() }}>&gt;</span>
   </div>
 )
 
 const Calendar = ({ date, setDay, incYear, decYear, incMonth, decMonth }) => (
-  <div className="calendar">
+  <div className="calendar-container">
     <div className="selection-group">
       <Selection
         inc={incYear}
@@ -107,6 +142,7 @@ const Calendar = ({ date, setDay, incYear, decYear, incMonth, decMonth }) => (
     </div>
     <Month
       month={date.fullMonth()}
+      dayNames={date.dayNames()}
       handleClick={setDay}/>
   </div>
 )
@@ -116,7 +152,7 @@ const App = () => {
   const [calendar, setCalendar] = useState(false)
 
   return (
-    <div className="calendar-container">
+    <div className="app-container">
       <InputField
         date={state}
         parse={(value) => dispatch({ type: 'SET_YEAR', value })}
