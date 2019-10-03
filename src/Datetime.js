@@ -89,6 +89,10 @@ class Datetime {
     }
     return month
   }
+
+  toString() {
+    return `${this.day}-${this.month}-${this.year}`
+  }
 }
 
-console.log(new Datetime().fullMonth())
+console.log(new Datetime().toString())
