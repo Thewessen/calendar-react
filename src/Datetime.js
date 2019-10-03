@@ -68,6 +68,10 @@ class Datetime {
       : 32
   }
 
+  get monthName() {
+    return MONTHS[this.month - 1]
+  }
+
   fullMonth() {
     const yearDiff = ZEROYEAR - this.year
     const startDay = (1 + yearDiff * 5) % WEEKDAYS.length
@@ -95,4 +99,4 @@ class Datetime {
   }
 }
 
-console.log(new Datetime().toString())
+export default Datetime
