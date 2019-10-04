@@ -1,22 +1,62 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 2rem auto;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.input-group {
+  width: 100%;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.input-group > input {
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+.input-group > input:first-child() {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.selection-group {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.calendar-container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.calendar-week {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%
+}
+
+.calendar-day {
+  padding: 1rem 1rem;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+.clickable {
+  cursor: pointer;
+}
+
+.disabled {
+  color: grey;
+  cursor: default;
 }
